@@ -1,0 +1,6 @@
+Django==3.2.23
+djangorestframework==3.13
+markdown==3.8.2
+celery==5.5.3
+redis==6.2.0
+pandas==2.3.0

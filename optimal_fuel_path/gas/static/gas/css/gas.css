@@ -1,0 +1,11 @@
+#truckstop-import-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    margin-top: 1.25rem;
+}
+
+#truckstop-import-button {
+    width: 12.5rem;
+}

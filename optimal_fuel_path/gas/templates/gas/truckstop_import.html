@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href='{% static "gas/css/gas.css" %}'>
+{% endblock extrahead %}
+
+{% block content %}
+<header>
+    <h2>Truckstop Import</h2>
+</header>
+<form enctype="multipart/form-data" method="post" id="truckstop-import-form">
+    {% csrf_token %}
+    {{ import_form.non_field_errors }}
+    {% for field in import_form %}
+        <div>
+            {{ field }}
+        </div>
+        <div>
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Submit" id="truckstop-import-button">
+</form>
+{% endblock content %}
