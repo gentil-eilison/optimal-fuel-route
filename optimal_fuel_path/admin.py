@@ -5,7 +5,12 @@ from django.http import HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
 
 from optimal_fuel_path.gas.forms import ImportTruckstopDataForm
-from optimal_fuel_path.addresses.tasks import import_country_states, import_cities
+from optimal_fuel_path.addresses.tasks import (
+    import_country_states, 
+    import_cities,
+    import_addresses
+)
+from optimal_fuel_path.gas.tasks import import_truckstops
 
 
 class GasAdminSite(admin.AdminSite):
@@ -38,8 +43,7 @@ class GasAdminSite(admin.AdminSite):
                 fs = FileSystemStorage(location="/home/cvstodia/Documents")
                 filename = fs.save(temp_file.name, temp_file)
                 full_path = fs.path(filename)
-                import_country_states(full_path)
-                import_cities(full_path)
+                import_truckstops.delay(full_path)
                 return HttpResponseRedirect("/admin/")
         
         context.update({"import_form": form})

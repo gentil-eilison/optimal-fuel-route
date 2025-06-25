@@ -46,7 +46,7 @@ class City(core_models.TimeStampedModel):
 
 
 class Address(core_models.TimeStampedModel):
-    city = models.ManyToManyField(
+    cities = models.ManyToManyField(
         City,
         related_name="addresses",
         verbose_name=_("City")
