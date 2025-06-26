@@ -12,6 +12,8 @@ from optimal_fuel_path.addresses.tasks import (
 )
 from optimal_fuel_path.gas.tasks import import_truckstops
 
+from celery import chain
+
 
 class GasAdminSite(admin.AdminSite):
     site_title = "Economic Car Trip"
@@ -43,7 +45,13 @@ class GasAdminSite(admin.AdminSite):
                 fs = FileSystemStorage(location="/home/cvstodia/Documents")
                 filename = fs.save(temp_file.name, temp_file)
                 full_path = fs.path(filename)
-                import_truckstops.delay(full_path)
+                workflow = chain(
+                    import_country_states.s(full_path),
+                    import_cities.s(full_path),
+                    import_addresses.s(full_path),
+                    import_truckstops.s(full_path)
+                )
+                workflow.apply_async()
                 return HttpResponseRedirect("/admin/")
         
         context.update({"import_form": form})
