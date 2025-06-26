@@ -1,3 +1,6 @@
 venv
+.env
+
 db.sqlite3
+
 .gitx.toml

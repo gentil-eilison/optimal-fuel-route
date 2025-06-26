@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from optimal_fuel_path.core import models as core_models
 from optimal_fuel_path.addresses import models as addresses_models
 
+from .querysets import TruckstopQuerySet
 
 class Truckstop(core_models.TimeStampedModel):
     name = models.CharField(
@@ -24,6 +25,8 @@ class Truckstop(core_models.TimeStampedModel):
         related_name="truckstops",
         verbose_name=_("Addresses")
     )
+
+    objects: TruckstopQuerySet = TruckstopQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("Truckstop")
